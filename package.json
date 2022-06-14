@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "phrasee backend takehome task",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon index.js"
   },
