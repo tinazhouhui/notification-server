@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backend:
+    image: 'node:16'
+    ports:
+      - '5000:5000'
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: bash -c 'npm install & npm start'
+    environment:
+      - PORT=5000
