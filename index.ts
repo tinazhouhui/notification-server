@@ -1,10 +1,7 @@
 'use strict';
 
-import dotenv from 'dotenv';
 import express from 'express';
-import router from './router.js';
-
-dotenv.config();
+import router from './router';
 
 const app = express();
 const PORT = process.env.PORT || 5000;

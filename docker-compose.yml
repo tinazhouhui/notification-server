@@ -4,9 +4,25 @@ services:
     image: 'node:16'
     ports:
       - '5000:5000'
+      - '5555:5555' #prisma studio
     volumes:
       - .:/app
     working_dir: /app
-    command: bash -c 'npm install & npm start'
+    command: bash -c 'npm install && npx prisma migrate dev && npm start'
+    env_file:
+      - .env
+    depends_on:
+      - 'postgres'
+
+  postgres:
+    image: postgres
     environment:
-      - PORT=5000
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - notifications:/var/lib/postgresql/data
+
+volumes:
+  notifications:
