@@ -4,11 +4,11 @@ services:
     image: 'node:16'
     ports:
       - '5000:5000'
-      - '5555:5555' #db studio
+      - '5555:5555' #prisma studio
     volumes:
       - .:/app
     working_dir: /app
-    command: bash -c 'npm install && npx db migrate dev && npm start'
+    command: bash -c 'npm install && npx prisma migrate dev && npm start'
     env_file:
       - .env
     depends_on:
