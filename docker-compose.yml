@@ -8,7 +8,7 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: bash -c 'npm install && npx prisma migrate dev && npm start'
+    command: bash -c 'npm install && npx prisma migrate deploy && npm start'
     env_file:
       - .env
     depends_on:

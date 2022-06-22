@@ -15,14 +15,14 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Commnet" (
-    "id" SERIAL NOT NULL,
+CREATE TABLE "Comment" (
+    "id" TEXT NOT NULL,
     "text" VARCHAR(255) NOT NULL,
     "read" BOOLEAN NOT NULL,
     "postId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
 
-    CONSTRAINT "Commnet_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -36,10 +36,10 @@ CREATE TABLE "Like" (
 );
 
 -- AddForeignKey
-ALTER TABLE "Commnet" ADD CONSTRAINT "Commnet_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Commnet" ADD CONSTRAINT "Commnet_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Comment" ADD CONSTRAINT "Comment_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Like" ADD CONSTRAINT "Like_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
