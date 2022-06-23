@@ -22,23 +22,35 @@ model User {
   name    String    @db.VarChar(255)
   comments Comment[]
   likes    Like[]
+  notifications Notification[]
 }
 
 model Comment {
   id     String  @id
   text   String  @db.VarChar(255)
-  read   Boolean
   post   Post    @relation(fields: [postId], references: [id])
   postId String
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id]) //this is the author
   userId String
 }
 
 model Like {
-  id     Int     @id @default(autoincrement())
-  read   Boolean
+  id     String     @id
   post   Post    @relation(fields: [postId], references: [id])
   postId String
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id]) //this is the author
   userId String
+}
+
+model Notification {
+  id    Int     @id @default(autoincrement())
+  likeId    String?
+  commentId String?
+  read  Boolean
+  user   User    @relation(fields: [userId], references: [id])  //this is who needs to be notified
+  userId String
+
+  @@index([likeId, commentId])
+  @@unique(fields: [commentId, userId], name: "commentId_userId")
+  @@unique(fields: [likeId, userId], name: "likeId_userId")
 }

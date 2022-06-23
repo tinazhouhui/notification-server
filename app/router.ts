@@ -1,15 +1,13 @@
 import Router from 'express';
-import {createNotification, getNotifications} from './controllers/notifications.controller';
+import {postNotification, getNotifications, markAsRead} from './controllers/notifications.controller';
 
 const router = Router();
 
-router.get('/notifications/:id', getNotifications);
+router.get('/notifications/:postId', getNotifications);
 
-router.post('/notifications', createNotification);
+router.post('/notifications/:type', postNotification);
 
-router.put('/notifications/:id', (req, res) => {
-	res.send({msg: 'PUT'});
-});
+router.put('/notifications/:type/:id', markAsRead);
 
 
 export default router;
