@@ -12,6 +12,8 @@ npm run seed
 ```
 
 ## Design
+<img src="./images/dbschema.png">
+
 ### Decision for a relational database rather than just json
 - upsert functionalities and schema validation
 - ORM benefits
