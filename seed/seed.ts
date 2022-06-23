@@ -4,22 +4,25 @@ import {createUser} from '../app/models/user.model';
 import {createPost} from '../app/models/post.model';
 import {createLike} from '../app/models/like.model';
 import {createComment} from '../app/models/comment.model';
+import {createNotification} from '../app/models/notification.model';
 
 async function populateWithSeedData(seedData: IComment[]|ILike[]) {
+	// create user me
+	await createUser({id: '1111myuniqueid2222', name: 'Me'});
+
 	for (const notification of seedData) {
 		const {user, post} = notification;
-		// save users
 		await createUser(user);
-
-		// save posts
 		await createPost(post);
 
-		// save likes and comments
-
+		let newNotification;
 		if (notification.type === 'Like') {
-			await createLike(notification, post, user);
+			newNotification = await createLike(post, user);
+			console.log(newNotification);
+			newNotification?.id && await createNotification(['1111myuniqueid2222'], newNotification.id, undefined);
 		} else {
-			await createComment(notification, post, user);
+			newNotification = await createComment(notification, post, user);
+			newNotification?.id && await createNotification(['1111myuniqueid2222'], undefined, newNotification.id);
 		}
 	}
 }

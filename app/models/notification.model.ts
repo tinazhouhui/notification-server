@@ -32,7 +32,7 @@ export async function createNotification(userIds: string[], likeId: string | und
 }
 
 
-export async function markCommentAsRead(commentId: string, userId = '') {
+export async function markCommentAsRead(commentId: string, userId = '1111myuniqueid2222') {
 	try {
 		return await prismaClient.notification.update({
 			where: {
@@ -48,7 +48,7 @@ export async function markCommentAsRead(commentId: string, userId = '') {
 	}
 }
 
-export async function markLikeAsRead(likeId: string, userId = '') {
+export async function markLikeAsRead(likeId: string, userId = '1111myuniqueid2222') {
 	try {
 		return await prismaClient.notification.update({
 			where: {

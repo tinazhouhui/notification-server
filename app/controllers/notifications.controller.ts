@@ -9,7 +9,6 @@ export async function getNotifications(req: Request, res: Response): Promise<voi
 	const {postId} = req.params;
 
 	try {
-		// todo promise all
 		const results = await Promise.all([getLikes(postId), getComments(postId)]);
 
 		const likes = results[0];
@@ -45,13 +44,11 @@ export async function postNotification(req: Request, res: Response): Promise<voi
 		let newNotification;
 		if (notification.type === 'Like') {
 			newNotification = await createLike(post, user);
-			console.log(newNotification);
-			newNotification?.id && await createNotification(['084300a01df3060f41fad4700a70b6fe'], newNotification.id, undefined);
+			newNotification?.id && await createNotification(['1111myuniqueid2222'], newNotification.id, undefined);
 		} else {
 			newNotification = await createComment(notification, post, user);
-			newNotification?.id && await createNotification(['084300a01df3060f41fad4700a70b6fe'], undefined, newNotification.id);
+			newNotification?.id && await createNotification(['1111myuniqueid2222'], undefined, newNotification.id);
 		}
-
 
 		res.send({data: newNotification});
 	} catch (err: any) {
@@ -69,9 +66,9 @@ export async function markAsRead (req: Request, res: Response): Promise<void> {
 		const {type, id} = req.params;
 
 		if (type === 'like') {
-			await markLikeAsRead(id, '084300a01df3060f41fad4700a70b6fe');
+			await markLikeAsRead(id);
 		} else {
-			await markCommentAsRead(id, '084300a01df3060f41fad4700a70b6fe');
+			await markCommentAsRead(id);
 		}
 
 		res.send({message: 'notification updated'});
