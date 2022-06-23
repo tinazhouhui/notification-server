@@ -1,24 +1,32 @@
 import {prismaClient} from '../db/client';
-import {ILike, IPost, IUser} from '../interfaces';
+import {IPost, IUser} from '../interfaces';
 
 export async function getLikes (id: string): Promise<any[]> {
 	return await prismaClient.like.findMany({
 		where: {
 			postId: id,
-			read: false
+			notifications: {
+				every: {
+					read: false
+				}
+			}
 		},
 		select: {
 			id: true,
-			user: true
+			user: true,
 		}
 	});
 }
 
-export async function createLike (notification: ILike, post: IPost, user: IUser) {
+export async function createLike (post: IPost, user: IUser) {
 	try {
-		return await prismaClient.like.create({
-			data: {
-				read: notification.read,
+		return await prismaClient.like.upsert({
+			where: {
+				id: post.id + user.id
+			},
+			update: {},
+			create: {
+				id: post.id + user.id,
 				postId: post.id,
 				userId: user.id
 			}

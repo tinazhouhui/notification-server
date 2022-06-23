@@ -32,6 +32,7 @@ model Comment {
   postId String
   user   User    @relation(fields: [userId], references: [id]) //this is the author
   userId String
+  notifications Notification[]
 }
 
 model Like {
@@ -40,11 +41,14 @@ model Like {
   postId String
   user   User    @relation(fields: [userId], references: [id]) //this is the author
   userId String
+  notifications Notification[]
 }
 
 model Notification {
   id    Int     @id @default(autoincrement())
+  like  Like?   @relation(fields: [likeId], references: [id])
   likeId    String?
+  comment   Comment?    @relation(fields: [commentId], references: [id])
   commentId String?
   read  Boolean
   user   User    @relation(fields: [userId], references: [id])  //this is who needs to be notified

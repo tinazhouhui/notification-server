@@ -5,7 +5,11 @@ export async function getComments (id: string): Promise<any[]> {
 	return await prismaClient.comment.findMany({
 		where: {
 			postId: id,
-			read: false
+			notifications: {
+				every: {
+					read: false
+				}
+			}
 		},
 		select: {
 			id: true,
@@ -25,13 +29,12 @@ export async function createComment (notification: IComment, post: IPost, user: 
 			update: {},
 			create: {
 				id: comment.id,
-				read: notification.read,
 				postId: post.id,
 				userId: user.id,
 				text: comment.commentText
 			}
 		});
 	} catch (err: any) {
-		console.error('comments not updated', err.stack);
+		console.error('comment not created: ', err.stack);
 	}
 }
