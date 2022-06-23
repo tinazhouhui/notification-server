@@ -2,21 +2,21 @@ import {prismaClient} from '../db/client';
 import {IComment, IPost, IUser} from '../interfaces';
 
 export async function getComments (id: string): Promise<any[]> {
-	return await prismaClient.comment.findMany({
-		where: {
-			postId: id,
-			notifications: {
-				every: {
-					read: false
-				}
-			}
-		},
-		select: {
-			id: true,
-			text: true,
-			user: true
-		}
-	});
+    return await prismaClient.comment.findMany({
+        where: {
+            postId: id,
+            notifications: {
+                every: {
+                    read: false
+                }
+            }
+        },
+        select: {
+            id: true,
+            text: true,
+            user: true
+        }
+    });
 }
 
 export async function createComment (comment: IComment, post: IPost, user: IUser) {
