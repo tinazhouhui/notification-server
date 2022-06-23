@@ -19,22 +19,21 @@ export async function getComments (id: string): Promise<any[]> {
 	});
 }
 
-export async function createComment (notification: IComment, post: IPost, user: IUser) {
-	try {
-		const {comment} = notification;
-		return await prismaClient.comment.upsert({
-			where: {
-				id: comment.id
-			},
-			update: {},
-			create: {
-				id: comment.id,
-				postId: post.id,
-				userId: user.id,
-				text: comment.commentText
-			}
-		});
-	} catch (err: any) {
-		console.error('comment not created: ', err.stack);
-	}
+export async function createComment (comment: IComment, post: IPost, user: IUser) {
+    try {
+        return await prismaClient.comment.upsert({
+            where: {
+                id: comment.id
+            },
+            update: {},
+            create: {
+                id: comment.id,
+                postId: post.id,
+                userId: user.id,
+                text: comment.commentText
+            }
+        });
+    } catch (err: any) {
+        console.error('comment not created: ', err.stack);
+    }
 }

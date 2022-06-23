@@ -1,4 +1,39 @@
 # PHRASEE BACK END TECHNICAL TEST
+## To run
+```shell
+docker compose up
+```
+
+## To populate with seed data
+- to use different seed data, save seed data as `data.json` in the `seed` folder
+```shell
+# run inside the docker container
+npm run seed
+```
+
+## Design
+### Decision for a relational database rather than just json
+- upsert functionalities and schema validation
+- ORM benefits
+- easier to expand in the future, e.g. get my likes and comments
+
+### Notification, Like, Comment table separation
+- notification table holds all the notifications for all users
+  - one comment on post can lead to the notification of multiple people, only the information that is needed is repeated
+  - the user in the notification table is anyone BUT the author of the notification
+- notification could be in the future just a file or in a nosql db to improve performance
+
+## To Improve
+- better error handling
+- validation of inputs
+- like - assuming that cannot recreate the same like
+- tests
+- have notifications and likes and comments tables loosely coupled - not dependent on foreign keys - this way if someone deletes the comment, the notificaiton history stays
+
+
+
+
+## Instructions
 You are tasked with writing the algorithm that takes a feed of notifications and aggregates them. The
 algorithm should be packaged in a web server that exposes three endpoints:
 - The first endpoint will provide the functionality to retrieve an aggregated list of notifications for a

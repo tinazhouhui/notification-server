@@ -8,20 +8,22 @@ export interface IPost {
     title: string,
 }
 
-export interface ILike {
+export interface ILikeNotification {
     type: 'Like',
     read: boolean,
     post: IPost,
     user: IUser
 }
 
-export interface IComment {
+export interface ICommentNotification {
     type: 'Comment',
     read: boolean,
     post: IPost,
     user: IUser,
-    comment: {
-        id: string,
-        commentText: string
-    }
+    comment: IComment
+}
+
+export interface IComment {
+    id: string,
+    commentText: string
 }
