@@ -124,9 +124,10 @@ response example
 - tests
 - have notifications and likes and comments tables loosely coupled - not dependent on foreign keys - this way if someone deletes the comment, the notificaiton history stays
 - mark as read to accept an array rather than individual id
+- improve the ids handling
+  - mark as read api - comment ID or like ID vs notification ID
 
-
-
+  
 ## Instructions
 You are tasked with writing the algorithm that takes a feed of notifications and aggregates them. The
 algorithm should be packaged in a web server that exposes three endpoints:
