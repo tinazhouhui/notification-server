@@ -1,7 +1,7 @@
 import {prismaClient} from '../db/client';
-import {IPost, IUser} from '../interfaces';
+import {ILikeResponse, IPost, IUser} from '../interfaces';
 
-export async function getLikes(id: string): Promise<any[]> {
+export async function getLikes(id: string): Promise<ILikeResponse[]> {
     return await prismaClient.like.findMany({
         where: {
             postId: id,

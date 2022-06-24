@@ -27,3 +27,30 @@ export interface IComment {
     id: string,
     commentText: string
 }
+
+
+export interface ILikeResponse {
+    id: string,
+    user: IUserResponse
+}
+
+export interface ICommentResponse {
+    id: string,
+    text: string,
+    user: IUserResponse
+}
+
+export interface IUserResponse {
+    id: string,
+    name: string
+}
+
+export interface INotificationsResponse {
+    notifications: {
+        likes: number,
+        comments: number,
+        total: number,
+    },
+    likes: ILikeResponse[],
+    comments: ICommentResponse[]
+}

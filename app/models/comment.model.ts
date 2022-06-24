@@ -1,7 +1,7 @@
 import {prismaClient} from '../db/client';
-import {IComment, IPost, IUser} from '../interfaces';
+import {IComment, ICommentResponse, IPost, IUser} from '../interfaces';
 
-export async function getComments (id: string): Promise<any[]> {
+export async function getComments (id: string): Promise<ICommentResponse[]> {
     return await prismaClient.comment.findMany({
         where: {
             postId: id,

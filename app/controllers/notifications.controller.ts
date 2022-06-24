@@ -4,6 +4,7 @@ import {createLike, getLikes} from '../models/like.model';
 import {createUser} from '../models/user.model';
 import {createPost} from '../models/post.model';
 import {createNotification, markCommentAsRead, markLikeAsRead} from '../models/notification.model';
+import {INotificationsResponse} from '../interfaces';
 
 export async function getNotifications(req: Request, res: Response): Promise<void> {
     const {postId} = req.params;
@@ -14,8 +15,8 @@ export async function getNotifications(req: Request, res: Response): Promise<voi
         const likes = results[0];
         const comments = results[1];
 
-        const output = {
-            data: {
+        const output: INotificationsResponse = {
+            notifications: {
                 likes: likes.length,
                 comments: comments.length,
                 total: likes.length + comments.length
@@ -49,15 +50,15 @@ export async function postNotification(req: Request, res: Response): Promise<voi
         case 'like': {
             const newLike = await createLike(post, user);
             // userID would be probably taken from a jwt token or some other authentication service
-            const newNotification = newLike?.id && await createNotification(['1111myuniqueid2222'], newLike.id, undefined);
-            res.send({data: newNotification});
+            const newNotifications = newLike?.id && await createNotification(['1111myuniqueid2222', '7305d0a8bb9d7166b8d26ca856930b8d'], newLike.id, undefined);
+            res.send({data: newNotifications});
         }
             break;
         case 'comment': {
             const newComment = await createComment(notification.comment, post, user);
             // userID would be probably taken from a jwt token or some other authentication service
-            const newNotification = newComment?.id && await createNotification(['1111myuniqueid2222'], undefined, newComment.id);
-            res.send({data: newNotification});
+            const newNotifications = newComment?.id && await createNotification(['1111myuniqueid2222'], undefined, newComment.id);
+            res.send({newNotifications});
         }
             break;
         default: {
@@ -83,12 +84,12 @@ export async function markAsRead(req: Request, res: Response): Promise<void> {
         switch (type) {
         case 'like': {
             await markLikeAsRead(id);
-            res.send({data: 'like updated'});
+            res.send({message: `like id ${id} marked as read`});
         }
             break;
         case 'comment': {
             await markCommentAsRead(id);
-            res.send({data: 'comment updated'});
+            res.send({message: `comment id ${id} marked as read`});
         }
             break;
         default: {

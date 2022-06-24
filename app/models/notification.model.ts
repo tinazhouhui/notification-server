@@ -23,7 +23,8 @@ export async function createNotification(userIds: string[], likeId: string | und
             const notification = await prismaClient.notification.create({
                 data
             });
-            notifications.push(notification);
+
+            notifications.push({id: notification.id, user: notification.userId});
         }
         return notifications;
     } catch (err: any) {
